@@ -1,4 +1,4 @@
-# 📁📁 Sistema de votación (En proceso)
+# 📁📁 Sistema de votación (Creando...)
 
 > :round_pushpin: _Trabajo Universitario._
 
