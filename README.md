@@ -1,6 +1,6 @@
-# :triangular_flag_on_post: Sistema-de-votacion
-> :round_pushpin: Sistema de votacion | Trabajo Universitario.
+# 📁📁 Sistema de votación
 
-Trabajo en conjunto con [EzeVolyBlu](https://github.com/EzeVolyBlu).
+> :round_pushpin: _Trabajo Universitario._
 
-Desarollo en grupo de un sistema de votación en java.
+
+Desarollo en conjunto con [EzeVolyBlu](https://github.com/EzeVolyBlu), de un sistema de votación en java. Realizado para Programación II (UNGS).
