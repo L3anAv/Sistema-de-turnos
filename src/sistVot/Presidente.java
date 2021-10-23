@@ -2,18 +2,20 @@ package sistVot;
 
 public class Presidente extends Persona {
 	
-	private int dni;
-	private int nombre;
 	private boolean esPresidente = true;
-	
-	public Presidente(int dni, String nombre) {
-		super(dni, nombre);
-		// TODO Esbozo de constructor generado automáticamente
-	}
+	private Turno turnoAsignado;
 
+// Constructor  ---------------------------------
+	
+	public Presidente(String dni, String nombre) 
+{
+		super(dni, nombre);
+}
+
+// Metodos de la clase ----------------------
+	
 	@Override
 	public Turno consultarTurno() {
-		// TODO Esbozo de método generado automáticamente
 		return null;
 	}
 
@@ -24,15 +26,27 @@ public class Presidente extends Persona {
 	}
 
 	@Override
-	public void asignarTurno() {
-		// TODO Esbozo de método generado automáticamente
-		
+	public boolean asistioAVotar() {
+		return false;
 	}
 
 	@Override
-	public boolean asistioAVotar() {
-		// TODO Esbozo de método generado automáticamente
-		return false;
+	public void asignarTurno(Turno nuevoTurno) {
+		turnoAsignado = nuevoTurno;
+		
 	}
+
+// Getters and Setters ------------------
+
+	public boolean isEsPresidente() {
+		return esPresidente;
+	}
+
+	public Turno getTurnoAsignado() {
+		return turnoAsignado;
+	}
+
+	
+	
 
 }

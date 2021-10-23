@@ -1,62 +1,75 @@
 package sistVot;
-import java.util.ArrayList;
+import java.util.*;
+
 
 public class SistemaDeVotacion {
+	
 	private String nombreDelSistema;
 	private ArrayList<Mesa> mesas;
 	private ArrayList<Persona> personasVotacion;
-	
+
+// Constructor  ---------------------------------
 	public SistemaDeVotacion(String nombreDelSistema) throws Exception 
-	{
-		
+{
+		//EXCEPTION
 		if(nombreDelSistema == null)
-			throw new Exception("El nombre no puede ser nulo");
+			throw new Exception("El nombre del sistema de votacion no puede ser nulo.");
 		
 		this.nombreDelSistema = nombreDelSistema;
 		personasVotacion = new ArrayList<>();
 		mesas = new ArrayList<>();
 		
-	}
+}
+
+// Metodos de la clase ---------------------------
+
 	
-	public void registrarVotante(int dni, String nombre, int edad, boolean tieneEnfermedad, boolean esTrabajador) throws Exception
-	{
-		if(edad <= 16)
-			throw new Exception("La edad no puede ser igual o menos a 16.");
+	//Me agrega igual el presidente aunque tenga el mismo dni.
+	//El equals me da false aunque presidente y votante tengo el mismo dni.
+	public void registrarVotante(String dni, String nombre, int edad, boolean tieneEnfermedad, boolean esTrabajador, boolean esPresidente) throws Exception
+{
+		//EXCEPTION
+		if(edad < 16)
+			throw new Exception("El votante no puede tener menos de 16 años.");
 		
-		//Instancio el nuevo votante.
-		Votante vot = new Votante(edad, nombre, tieneEnfermedad, esTrabajador);
+		//Crea la persona segun si es o no presidente.
+		Persona votante;
+		if(esPresidente) {
+			votante = new Presidente(dni, nombre);
+		}else {
+			votante = new Votante(dni, nombre, tieneEnfermedad, esTrabajador);
+		}
 		
-		//Con el equals de votante debo verficar que son distintos (diferente DNI), para luego agregarlos a la lista de votantes.
-		personasVotacion.add(vot);
+		if(!existePersona(votante)	) {
+			personasVotacion.add(votante);
+		}
+}
+	public boolean existePersona(Persona personaAEvaluar) 
+{
 		
+				boolean existe = false;
+				for (Persona persona : personasVotacion){
+					  if(personaAEvaluar.equals(persona))
+						existe = true;
+					}
+			
+				return existe;
 	}
 
 	public int agregarMesa(String tipoMesa, int dni) 
-	{
-		//Evaluacion del parametro tipoMesa
-		if(tipoMesa == "Mesa trabajadores") {
-			//Creo la mesa para trabajadores.
-			//retorno numero de mesa.
-			return 1;
-		} else if(tipoMesa == "Mesa Enfermedades") {
-			//creo la mesa para enfermedades.
-			//retorno numero de mesa.
-			return 1;
-		} else if(tipoMesa == "Mesa Mayores") {
-			//creo la mesa para mayores
-			//Retorno numero de mesa.
-			return 1;
-		}
-		
-		//Retorna el numero de mesa de la mesa creada.
+{
+		if(tipoMesa == "Mayor65") 
+{
+//			Mesa mesaMayor = new MesaMayores(presidente);
+//			return mesaMayor.getNumDeMesa();
+}
 		return 1;
+}
+
+	
+	public Tupla<Integer, Integer> asignarTurno(int dni) throws Exception
+{
 		
-	}
-	
-//	hola
-	
-	public Tupla<Integer, Integer> asignarTurno(int dni)
-	{
 		
 		int num = 1;
 		int num2 = 2;
@@ -64,7 +77,7 @@ public class SistemaDeVotacion {
 		
 		return tupla;
 		
-	}
+}
 	
 	public int asignarTurno() 
 	{
@@ -88,7 +101,19 @@ public class SistemaDeVotacion {
 	
 		return tupla;
 	}; 
+
 	
-//	public List<Tupla<String, Integer>> sinTurnoSegunTipoMesa(); 
+// Getters and Setters ---------------------------
+	
+	public ArrayList<Mesa> getMesas() 
+{
+		return mesas;
+}
+
+
+	public ArrayList<Persona> getPersonasVotacion() 
+{
+		return personasVotacion;
+}
 
 }

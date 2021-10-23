@@ -2,45 +2,72 @@ package sistVot;
 
 public class Votante extends Persona{
 
-	private int dni;
-	private Turno turnoAsignado;
 	private int edad;
+	private Turno turnoAsignado;
 	private boolean tieneEnfermedad;
 	private boolean esTrabajador;
 	private boolean esPresidente = false;
 	
-	public Votante(int dni, String nombre, boolean tieneEnfermedad, boolean esTrabajador){
+// Constructor  ---------------------------------		
+	
+	public Votante(String dni, String nombre, boolean tieneEnfermedad, boolean esTrabajador)
+{
 		
 		super(dni, nombre);
 		this.tieneEnfermedad = tieneEnfermedad;
 		this.esTrabajador = esTrabajador;
 		
-	}
+}
+
+//Metodos de Votante (Sobre-Escritura | Heredados)
 	
 	@Override
 	public Turno consultarTurno() {
-		// TODO Esbozo de método generado automáticamente
-		return null;
+		return turnoAsignado;
 	}
 
 	@Override
 	public void votar() {
-		// TODO Esbozo de método generado automáticamente
+		turnoAsignado.registrarVoto();
 		
 	}
 
+	@Override
+	public void asignarTurno(Turno nuevoTurno) {
+		turnoAsignado = nuevoTurno;
+		
+	}
+	
 	@Override
 	public boolean asistioAVotar() {
-		// TODO Esbozo de método generado automáticamente
-		return false;
+		if(turnoAsignado.getAsistioAVotar()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+// Getters  ---------------------------
+
+
+	public Turno getTurnoAsignado() {
+		return turnoAsignado;
 	}
 
-	@Override
-	public void asignarTurno() {
-		// TODO Esbozo de método generado automáticamente
-		
+	public int getEdad() {
+		return edad;
 	}
-	
-	
+
+	public boolean isTieneEnfermedad() {
+		return tieneEnfermedad;
+	}
+
+	public boolean isEsTrabajador() {
+		return esTrabajador;
+	}
+
+	public boolean isEsPresidente() {
+		return esPresidente;
+	}
 
 }
