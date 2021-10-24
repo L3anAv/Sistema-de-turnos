@@ -10,7 +10,7 @@ public class Votante extends Persona{
 	
 // Constructor  ---------------------------------		
 	
-	public Votante(String dni, String nombre, boolean tieneEnfermedad, boolean esTrabajador)
+	public Votante(int dni, String nombre, boolean tieneEnfermedad, boolean esTrabajador)
 {
 		
 		super(dni, nombre);

@@ -6,14 +6,15 @@ public class PruebasDelSistema {
 
 	public static void main(String[] args) {
 		
+		/*
 		try {
 			SistemaDeVotacion sisv = new SistemaDeVotacion("Nombre");
 			
-			sisv.registrarVotante("2340", "Matias", 35, false, false,false);
-			sisv.registrarVotante("2341", "Marcos", 25, false, false,false);
-			sisv.registrarVotante("2342", "Pablo", 25, false, false,true);
+			sisv.registrarVotante(2340, "Matias", 35, false, false);
+			//sisv.registrarVotante("2341", "Marcos", 25, false, false,false);
+			//sisv.registrarVotante("2342", "Pablo", 25, false, false,true);
 			
-			ArrayList<Persona> persona = sisv.getPersonasVotacion();
+			ArrayList<Votante> persona = sisv.getVotantes();
 			
 			System.out.println(persona.get(0).equals(persona.get(2)));
 			
@@ -27,6 +28,7 @@ public class PruebasDelSistema {
 		}catch(Exception e){
 			System.out.println("Sucedio un error: " + e);
 		}
+		*/
 		
 
 	}

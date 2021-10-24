@@ -4,8 +4,8 @@ public class MesaMayores extends Mesa {
 	
 	private int[] franjasHorarias;
 	
-	public MesaMayores(Presidente presidenteDeMesa, int[] franjasHorarias) {
-		super(presidenteDeMesa);
+	public MesaMayores(Presidente presidente, int numero, int[] franjasHorarias) {
+		super(presidente, numero);
 		this.franjasHorarias = franjasHorarias;
 	}
 	
@@ -18,7 +18,7 @@ public class MesaMayores extends Mesa {
 		return true;
 	}
 	
-	public int getNumDeMesa() {
-		return numDeMesa;
+	public int getNumero() {
+		return numero;
 	}
 }
