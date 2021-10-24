@@ -11,10 +11,13 @@ public class PruebasDelSistema {
 			
 			sisv.registrarVotante("2340", "Matias", 35, false, false,false);
 			sisv.registrarVotante("2341", "Marcos", 25, false, false,false);
-			sisv.registrarVotante("2342", "Pablo", 25, false, false,true);
+			sisv.registrarVotante("2340", "Pablo", 25, false, false,true);
 			
 			ArrayList<Persona> persona = sisv.getPersonasVotacion();
 			
+			System.out.println(persona.get(0).getNombre());
+			System.out.println(persona.get(2).getNombre());
+			System.out.println("");
 			System.out.println(persona.get(0).equals(persona.get(2)));
 			
 			Iterator<Persona> p = persona.iterator();

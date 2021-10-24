@@ -24,25 +24,6 @@ public abstract class Persona extends Object {
 	public abstract boolean asistioAVotar();
 	
 
-// Equals ---------------	
-	@Override
-	public boolean equals(Object obj) {
-		
-		if (this == obj)
-			return true;
-		
-		if (obj == null)
-			return false;
-		
-		if (!(obj.getClass().equals(getClass())))
-			return false;
-		
-		Persona other = (Persona) obj;
-		if(other.getDni().equals(getDni()))
-			return true;
-		return false;
-	}
-
 // Getters and Setters --------------------------
 
 	public boolean getEsPresidente() 
