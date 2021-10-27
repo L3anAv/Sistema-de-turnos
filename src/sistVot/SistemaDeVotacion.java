@@ -8,6 +8,9 @@ public class SistemaDeVotacion {
 	private ArrayList<Mesa> mesas;
 	private ArrayList<Votante> votantes;
 	private int[] franjasHorarias;
+	
+	private static String ERROR_VOTANTE_NO_REGISTRADO = "Votante no registrado";
+	private static String ERROR_PRESIDENTE_NO_REGISTRADO = "Presidente no registrado";
 
 // Constructor  ---------------------------------
 	public SistemaDeVotacion(String nombreDelSistema) throws Exception 
@@ -35,7 +38,7 @@ public class SistemaDeVotacion {
 			throw new Exception("El votante no puede tener menos de 16 aÃ±os.");
 		
 		//Crea la persona segun si es o no presidente.
-		Votante votante = new Votante(dni, nombre, tieneEnfermedad, esTrabajador);
+		Votante votante = new Votante(dni, nombre, edad, tieneEnfermedad, esTrabajador);
 				
 		if(!existePersona(votante)	) {
 			votantes.add(votante);
@@ -61,7 +64,7 @@ public class SistemaDeVotacion {
 	* si el tipo de mesa no es válido debe generar una excepción
 	* Los tipos válidos son: “Enf_Preex”, “Mayor65”, “General” y “Trabajador”
 	*/
-	public int agregarMesa(String tipoMesa, int dni) 
+	public int agregarMesa(String tipoMesa, int dni) throws Exception
 	{
 		
 		int numeroMesa = mesas.size() + 1;
@@ -70,12 +73,13 @@ public class SistemaDeVotacion {
 		try {
 			
 			votante = obtenerVotante(dni);
-		} 
+		}
 		
 		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+			if(e.getMessage().equals(ERROR_VOTANTE_NO_REGISTRADO))
+				throw new Exception(ERROR_PRESIDENTE_NO_REGISTRADO);
+		}		
 		
 		Presidente presidente = new Presidente(dni, votante.getNombre());
 		
@@ -85,12 +89,12 @@ public class SistemaDeVotacion {
 			
 			case "Enf_Preex":
 				
-				mesa = new MesaEnfPreex(presidente, numeroMesa, franjasHorarias);
+				mesa = new MesaEnfPreex(presidente, numeroMesa);
 				break;
 	
 			case "Mayor65":
 				
-				mesa = new MesaMayores(presidente, numeroMesa, franjasHorarias);
+				mesa = new MesaMayores(presidente, numeroMesa);
 				break;
 				
 			case "Trabajador":
@@ -101,7 +105,7 @@ public class SistemaDeVotacion {
 				
 			default:
 
-				mesa = new MesaGeneral(presidente, numeroMesa, franjasHorarias);
+				mesa = new MesaGeneral(presidente, numeroMesa);
 				break;
 		}
 		
@@ -117,7 +121,7 @@ public class SistemaDeVotacion {
 		Boolean encontroVotante = false;
 		Votante votante = null;
 		
-		while(itVot.hasNext() || !encontroVotante ) {
+		while(itVot.hasNext() && !encontroVotante ) {
 			
 			votante = itVot.next();
 			encontroVotante = votante.getDni() == dni; 
@@ -127,7 +131,7 @@ public class SistemaDeVotacion {
 			return votante;
 		}
 		
-		else throw new Exception("Votante no registrado");
+		else throw new Exception(ERROR_VOTANTE_NO_REGISTRADO);
 	}
 
 	/* Asigna un turno a un votante determinado.
@@ -141,16 +145,72 @@ public class SistemaDeVotacion {
 	* (Se supone que el turno permitirá conocer la mesa y la franja horaria asignada)
 	*/
 
-	public Tupla<Integer, Integer> asignarTurno(int dni) throws Exception
+	public Tupla<Integer, Integer> asignarTurno(int dni) throws Exception 
 	{
 		
 		
+		Votante votante;
+		Tupla<Integer, Integer> turno;
+
 		
+		// Valida votante
+		try {
+			
+			votante = obtenerVotante(dni);
+		} 
 		
+		catch (Exception e) {
+			
+			throw new Exception(ERROR_VOTANTE_NO_REGISTRADO);
+		}
+
 		
-		return null;
+		// Tiene turno
+		if(votante.tieneTurnoAsignado()) {
+
+			turno = votante.getTurnoAsignado(); 
+		}
+
+		else {
+
+			turno = obtenerTurno(votante);
+			
+			if(turno != null)
+				votante.asignarTurno(turno);
+			
+		}
+		
+		return turno;
 	}
 	
+	private Tupla<Integer, Integer> obtenerTurno(Votante votante) {
+		
+		Tupla<Integer, Integer> turno = null;
+		
+		
+		Iterator<Mesa> itMesa = mesas.iterator();
+		Mesa mesa = null;
+		int horarioDisponible = 0;
+		
+		System.out.println("OBTENER TURNO");
+		
+		while(itMesa.hasNext() && horarioDisponible == 0) {
+			
+			mesa = itMesa.next();
+			System.out.println(mesa);
+			System.out.println(mesa.obtenerHorarioDisponible());
+			
+			if(mesa.aceptaVotante(votante))
+				horarioDisponible = mesa.obtenerHorarioDisponible();
+		}
+		
+		if(horarioDisponible > 0) {
+			turno = new Tupla<Integer, Integer>(mesa.getNumero(), horarioDisponible); 
+		}
+		
+		return turno;
+	}
+
 	public int asignarTurno() 
 	{
 		//Retorna la cantidad de turnos asignados.

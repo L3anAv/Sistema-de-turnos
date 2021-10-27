@@ -4,8 +4,9 @@ public abstract class Persona extends Object {
 	
 	private int dni;
 	private String nombre;
-	private Turno turnoAsignado;
+	private Tupla<Integer, Integer> turnoAsignado;
 	private boolean esPresidente;
+	private boolean asistioAVotar;
 	
 // Constructor  --------------------------------
 	
@@ -16,12 +17,25 @@ public abstract class Persona extends Object {
 		
 }
 
-// Metodos de la clase (Abstract) ---------------	
+// Metodos de la clase 
 	
-	public abstract Turno consultarTurno();
-	public abstract void votar();
-	public abstract void asignarTurno(Turno nuevoTurno);
-	public abstract boolean asistioAVotar();
+	
+	public boolean tieneTurnoAsignado( ) {
+		return turnoAsignado != null;
+	}
+	
+	
+	
+	
+	
+	//(Abstract) ---------------	
+	
+	// public abstract Turno consultarTurno();
+	//public abstract void votar();
+	
+	
+	
+	
 	
 
 // Equals ---------------	
@@ -45,12 +59,24 @@ public abstract class Persona extends Object {
 
 // Getters and Setters --------------------------
 
+	public boolean asistioAVotar() {
+		return asistioAVotar;
+	}
+	
+	public void asistioAVotar(boolean asistioAVotar) {
+		this.asistioAVotar = asistioAVotar;
+	}
+	
+	public void asignarTurno(Tupla<Integer, Integer> nuevoTurno) {
+		turnoAsignado = nuevoTurno;
+	}
+	
 	public boolean getEsPresidente() 
 {
 		return esPresidente;
 }
 
-	public Turno getTurno() 
+	public Tupla<Integer, Integer> getTurnoAsignado() 
 {
 		return turnoAsignado;
 }

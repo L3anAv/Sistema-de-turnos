@@ -2,23 +2,19 @@ package sistVot;
 
 public class MesaMayores extends Mesa {
 	
-	private int[] franjasHorarias;
 	
-	public MesaMayores(Presidente presidente, int numero, int[] franjasHorarias) {
-		super(presidente, numero);
-		this.franjasHorarias = franjasHorarias;
-	}
-	
-	public int[] getFranjasHorarias() {
-		return franjasHorarias;
+	public MesaMayores(Presidente presidente, int numero) {
+		super(presidente, numero, "Personas Mayores", 10);
 	}
 
 	@Override
-	public boolean tieneCupo() {
-		return true;
+	protected boolean aceptaVotante(Votante votante) {
+		
+		return (
+			!votante.esTrabajador()
+			&& !votante.tieneEnfermedad()
+		);
 	}
 	
-	public int getNumero() {
-		return numero;
-	}
+	
 }
