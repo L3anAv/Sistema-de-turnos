@@ -1,36 +1,28 @@
 package sistVot;
 
-public class MesaMayores extends Mesa {
-	
+public class MesaGeneral extends Mesa {
+
 	private int[] franjasHorarias;
-	private int cupoPorFranja = 10;
+	private int cupoPorFranja = 30;
 	private int cuposTotales = franjasHorarias.length * cupoPorFranja;
 	
-	public MesaMayores(Presidente presidente, int numero, int[] franjasHorarias) {
+	public MesaGeneral(Presidente presidente, int numero, int[] franjasHorarias) {
 		super(presidente, numero);
-		this.franjasHorarias = franjasHorarias;
-	}
-	
-	public int[] getFranjasHorarias() {
-		return franjasHorarias;
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public boolean tieneCupo() {
-		
 		if(cuposTotales > 0)
 			return true;
 		else
 			return false;
-		
-	}
-	
-	public int getNumero() {
-		return numero;
 	}
 
 	@Override
 	public int darFranjaHorariaDisponible() {
+		// TODO Esbozo de método generado automáticamente
 		return 0;
 	}
+
 }

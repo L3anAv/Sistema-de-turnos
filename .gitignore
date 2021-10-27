@@ -10,7 +10,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-#PruebasDelSistema.java
+PruebasDelSistema.java
 
 # External tool builders
 .externalToolBuilders/

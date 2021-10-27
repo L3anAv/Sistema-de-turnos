@@ -10,7 +10,7 @@ public class Votante extends Persona{
 	
 // Constructor  ---------------------------------		
 	
-	public Votante(String dni, String nombre, boolean tieneEnfermedad, boolean esTrabajador)
+	public Votante(int dni, String nombre, boolean tieneEnfermedad, boolean esTrabajador)
 {
 		
 		super(dni, nombre);
@@ -24,13 +24,13 @@ public class Votante extends Persona{
 	@Override
 	public Turno consultarTurno() {
 		return turnoAsignado;
-	}
+}
 
 	@Override
 	public void votar() {
 		turnoAsignado.registrarVoto();
-		
-	}
+
+}
 
 	@Override
 	public void asignarTurno(Turno nuevoTurno) {
@@ -49,10 +49,6 @@ public class Votante extends Persona{
 	
 // Getters  ---------------------------
 
-
-	public Turno getTurnoAsignado() {
-		return turnoAsignado;
-	}
 
 	public int getEdad() {
 		return edad;

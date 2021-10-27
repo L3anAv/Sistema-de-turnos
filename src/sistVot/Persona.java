@@ -2,14 +2,14 @@ package sistVot;
 
 public abstract class Persona extends Object {
 	
-	private String dni;
+	private int dni;
 	private String nombre;
 	private Turno turnoAsignado;
 	private boolean esPresidente;
 	
 // Constructor  --------------------------------
 	
-	public Persona(String dni, String nombre)
+	public Persona(int dni, String nombre)
 {
 		this.dni = dni;
 		this.nombre = nombre;
@@ -24,6 +24,23 @@ public abstract class Persona extends Object {
 	public abstract boolean asistioAVotar();
 	
 
+// Equals ---------------	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (this == obj)
+			return true;
+		
+		if (obj == null)
+			return false;
+		
+		Persona other = (Persona) obj;
+		if(other.getDni() == this.dni)
+			return true;
+		return false;
+	}
+
+	
 // Getters and Setters --------------------------
 
 	public boolean getEsPresidente() 
@@ -41,7 +58,7 @@ public abstract class Persona extends Object {
 		return nombre;
 }
 	
-	public String getDni() 
+	public int getDni() 
 {
 		return dni;
 }
