@@ -242,13 +242,9 @@ public class SistemaDeVotacion {
 	
 	public int votantesConTurno(String tipoMesa) {return 1;};
 	
-	public Tupla<Integer, Integer> consultaTurno(int dni)
+	public Tupla<Integer, Integer> consultaTurno(int dni) throws Exception
 	{
-		int num = 1;
-		int num2 = 2;
-		Tupla<Integer, Integer> tupla = new Tupla<Integer, Integer>(num, num2);
-	
-		return tupla;
+		return obtenerVotante(dni).getTurnoAsignado();
 	}; 
 
 	

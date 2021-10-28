@@ -259,8 +259,78 @@ public class SistemaDeVotacionTest {
 		assertEquals("Debió asignar cuatro turnos", 4, turnosAsignados);
 	}
 	
+	/* Consulta el turno de un votante dado su DNI. Devuelve Mesa y franja horaria.
+	* - Si el DNI no pertenece a un votante genera una excepción.
+	* - Si el votante no tiene turno devuelve null.
+	*/
+	// public Tupla<Integer, Integer> consultaTurno(int dni);
 	
+	@Test
+	public void recibeDNI_devuelveTurnoDeVotante() throws Exception {
+		
+		sisv = new SistemaDeVotacion("Sistema Test");
+
+		// SetUp Mesa y Presidente
+		sisv.registrarVotante(dni, "Mr. President", 40, false, true);
+		sisv.agregarMesa("Enf_Preex", dni);
+
+
+		sisv.registrarVotante(++dni, "Un Votante con Enf_Preex", 40, true, false);
+
+		Tupla<Integer, Integer> turno = sisv.asignarTurno(dni);
+		
+		Tupla<Integer, Integer> turnoPorMetodo = null;
+		
+		try {
+			
+			turnoPorMetodo = sisv.consultaTurno(dni);
+		}
+		
+		catch (Exception e) {
+		
+			System.out.println(e.getMessage());
+		}
+		
+		
+		assertEquals("Nro de mesa incorrecto", turno.getValor1(), turnoPorMetodo.getValor1());
+		assertEquals("Franja horaria incorrecta", turno.getValor2(), turnoPorMetodo.getValor2());
+	}
 	
+	@Test
+	public void siElVotanteNoEstaRegistradoGeneraExcepcion() throws Exception {
+		
+		sisv = new SistemaDeVotacion("Sistema Test");
+
+		Tupla<Integer, Integer> turnoPorMetodo = null;
+		
+		assertFalse("HasError debe iniciar en false", hasError);
+		
+		try {
+			
+			turnoPorMetodo = sisv.consultaTurno(dni);
+		}
+		
+		catch (Exception e) {
+		
+			hasError = true;
+		}
+		
+		assertTrue("Debio generar exception", hasError);
+	}
+	
+	@Test
+	public void siElVotanteNoTieneTurnoDevuelveNull() throws Exception {
+		
+		sisv = new SistemaDeVotacion("Sistema Test");
+
+		// SetUp Mesa y Presidente
+		sisv.registrarVotante(dni, "Mr. President", 40, false, true);
+		sisv.agregarMesa("Enf_Preex", dni);
+
+		sisv.registrarVotante(++dni, "Un Votante con Enf_Preex", 40, true, false);
+		
+		assertNull(sisv.consultaTurno(dni));
+	}
 	
 	
 	
