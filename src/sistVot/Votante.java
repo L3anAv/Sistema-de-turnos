@@ -3,67 +3,72 @@ package sistVot;
 public class Votante extends Persona{
 
 	private int edad;
-	private Turno turnoAsignado;
 	private boolean tieneEnfermedad;
 	private boolean esTrabajador;
-	private boolean esPresidente = false;
+	private Tupla<Integer, Integer> turnoAsignado;
+
+	// private boolean esPresidente = false;
 	
 // Constructor  ---------------------------------		
 	
-	public Votante(int dni, String nombre, boolean tieneEnfermedad, boolean esTrabajador)
+	public Votante(int dni, String nombre, int edad, boolean tieneEnfermedad, boolean esTrabajador)
 {
 		
 		super(dni, nombre);
+		this.edad = edad;
 		this.tieneEnfermedad = tieneEnfermedad;
 		this.esTrabajador = esTrabajador;
 		
 }
-
-//Metodos de Votante (Sobre-Escritura | Heredados)
 	
 	@Override
-	public Turno consultarTurno() {
-		return turnoAsignado;
-}
+	public String toString() {
 
-	@Override
-	public void votar() {
-		turnoAsignado.registrarVoto();
-
-}
-
-	@Override
-	public void asignarTurno(Turno nuevoTurno) {
-		turnoAsignado = nuevoTurno;
+		String toString = "NOMBRE: " + getNombre();
+		toString += " | DNI: " + getDni();
+		toString += " | EDAD : " + edad;
+		toString += " | TIENE ENFERMEDAD: " + tieneEnfermedad;
+		toString += " | ES TRABAJADOR: " + esTrabajador;
+		toString += " | ES MAYOR: " + esMayor();
+		toString += " | TIENE TURNO ASIGNADO: " + tieneTurnoAsignado();
 		
+		return toString;
 	}
 	
-	@Override
-	public boolean asistioAVotar() {
-		if(turnoAsignado.getAsistioAVotar()) {
-			return true;
-		}else {
-			return false;
-		}
+
+	public Tupla<Integer, Integer> getTurnoAsignado() 
+	{
+		return turnoAsignado;
 	}
 	
-// Getters  ---------------------------
-
-
 	public int getEdad() {
 		return edad;
 	}
 
-	public boolean isTieneEnfermedad() {
+	public boolean tieneEnfermedad() {
 		return tieneEnfermedad;
 	}
 
-	public boolean isEsTrabajador() {
+	public boolean esTrabajador() {
 		return esTrabajador;
 	}
 
-	public boolean isEsPresidente() {
+	public boolean esMayor() {
+		return edad >= 65;
+	}
+	
+	public void asignarTurno(Tupla<Integer, Integer> nuevoTurno) {
+		turnoAsignado = nuevoTurno;
+	}
+	
+	public boolean tieneTurnoAsignado() {
+		return turnoAsignado != null;
+	}
+
+	/*
+	public boolean esPresidente() {
 		return esPresidente;
 	}
+	*/
 
 }
