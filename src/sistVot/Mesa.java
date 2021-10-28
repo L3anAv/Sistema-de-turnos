@@ -59,6 +59,7 @@ public abstract class Mesa {
 			return franjasHorarias;
 }
 
+
 	public int getNumero(){
 			return numero;
 }

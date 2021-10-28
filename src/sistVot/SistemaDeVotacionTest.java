@@ -6,42 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SistemaDeVotacionTest {
-
-
-	/**
-	 * 
-		
-		HECHOS: (solo lo basico)
-		
-		public SistemaDeTurnos(String nombreSistema); 
-		
-		public void registrarVotante(int dni, String nombre, int edad, boolean enfPrevia, boolean
-		trabaja);
-		
-		public int agregarMesa(String tipoMesa, int dni);
-		
-		
-		public Tupla<Integer, Integer> asignarTurno(int dni);
-		
-		
-		PENDIENTES:
-		
-		
-		
-		public int asignarTurno();
-		
-		public boolean votar(int dni);
-		public int votantesConTurno(String tipoMesa);
-		
-		public Tupla<Integer, Integer> consultaTurno(int dni);
-		
-		public Map<Integer,List< Integer>> asignadosAMesa(int numMesa);
-		
-		public List<Tupla<String, Integer>> sinTurnoSegunTipoMesa();
-		
-		
-	 * 
+	
+	/*
+	 *
 	 * @param nombreSistema
+	 *
 	 */
 	
 	
@@ -348,10 +317,89 @@ public class SistemaDeVotacionTest {
 		}
 		
 	}
-	
-}	
 
 
+
+
+	/* Asigna turnos autom�ticamente a los votantes sin turno.
+	* El sistema busca si hay alguna mesa y franja horaria factible en la que haya disponibilidad.
+	* Devuelve la cantidad de turnos que pudo asignar.
+	*/
 	
+	// public int asignarTurno();
 	
+	/* Consulta el turno de un votante dado su DNI. Devuelve Mesa y franja horaria.
+	* - Si el DNI no pertenece a un votante genera una excepci�n.
+	* - Si el votante no tiene turno devuelve null.
+	*/
+	// public Tupla<Integer, Integer> consultaTurno(int dni);
+	
+	@Test
+	public void recibeDNI_devuelveTurnoDeVotante() throws Exception {
+		
+		sisv = new SistemaDeVotacion("Sistema Test");
+
+		// SetUp Mesa y Presidente
+		sisv.registrarVotante(dni, "Mr. President", 40, false, true);
+		sisv.agregarMesa("Enf_Preex", dni);
+
+
+		sisv.registrarVotante(++dni, "Un Votante con Enf_Preex", 40, true, false);
+
+		Tupla<Integer, Integer> turno = sisv.asignarTurno(dni);
+		
+		Tupla<Integer, Integer> turnoPorMetodo = null;
+		
+		try {
+			
+			turnoPorMetodo = sisv.consultaTurno(dni);
+		}
+		
+		catch (Exception e) {
+		
+			System.out.println(e.getMessage());
+		}
+		
+		
+		assertEquals("Nro de mesa incorrecto", turno.getValor1(), turnoPorMetodo.getValor1());
+		assertEquals("Franja horaria incorrecta", turno.getValor2(), turnoPorMetodo.getValor2());
+	}
+	
+	@Test
+	public void siElVotanteNoEstaRegistradoGeneraExcepcion() throws Exception {
+		
+		sisv = new SistemaDeVotacion("Sistema Test");
+		assertFalse("HasError debe iniciar en false", hasError);
+		
+		try {
+			
+			Tupla<Integer, Integer>	turnoPorMetodo = sisv.consultaTurno(dni);
+		}
+		
+		catch (Exception e) {
+		
+			hasError = true;
+		}
+		
+		assertTrue("Debio generar exception", hasError);
+	}
+	
+	@Test
+	public void siElVotanteNoTieneTurnoDevuelveNull() throws Exception {
+		
+		sisv = new SistemaDeVotacion("Sistema Test");
+
+		// SetUp Mesa y Presidente
+		sisv.registrarVotante(dni, "Mr. President", 40, false, true);
+		sisv.agregarMesa("Enf_Preex", dni);
+
+
+		sisv.registrarVotante(++dni, "Un Votante con Enf_Preex", 40, true, false);
+		
+		assertNull(sisv.consultaTurno(dni));
+
+	}
+}
+
+
 

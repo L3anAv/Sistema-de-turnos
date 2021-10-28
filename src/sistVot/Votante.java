@@ -40,6 +40,7 @@ public class Votante extends Persona{
 	{
 		return turnoAsignado;
 	}
+
 	
 	public int getEdad() {
 		return edad;
@@ -64,11 +65,5 @@ public class Votante extends Persona{
 	public boolean tieneTurnoAsignado() {
 		return turnoAsignado != null;
 	}
-
-	/*
-	public boolean esPresidente() {
-		return esPresidente;
-	}
-	*/
 
 }

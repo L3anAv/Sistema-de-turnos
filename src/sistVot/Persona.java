@@ -15,9 +15,8 @@ public abstract class Persona extends Object {
 		this.nombre = nombre;
 		
 }
-
-// Equals ---------------	
 	
+// Metodos Equals	
 	@Override
 	public boolean equals(Object obj) {
 		
@@ -44,11 +43,13 @@ public abstract class Persona extends Object {
 	
 	public void SetAsistioAVotar(boolean asistioAVotar){
 		this.asistioAVotar = asistioAVotar;
+
 }
 
 	public boolean getEsPresidente(){
 		return esPresidente;
 }
+
 
 	public String getNombre(){
 		return nombre;
