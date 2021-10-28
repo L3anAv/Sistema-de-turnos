@@ -70,12 +70,19 @@ public abstract class Mesa {
 
 		// Como la division de enteros trunca el resultado, sirve para obtener la posicion 
 		// de franjas horarias libre.
-		
-		return (
-			franjasHorarias[
-                votantesRegistrados / maximoVotantesPorFranjaHoraria
-            ]
-		);
+		int arrayPosition = votantesRegistrados / maximoVotantesPorFranjaHoraria;
+		if(franjasHorarias.length == arrayPosition) {
+			return 0;
+		} else 
+			return (
+				franjasHorarias[
+	                votantesRegistrados / maximoVotantesPorFranjaHoraria
+	            ]
+			);
+	}
+
+	public void registrarVotante() {
+		votantesRegistrados++;
 	}
 	
 	

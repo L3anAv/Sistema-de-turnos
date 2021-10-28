@@ -108,9 +108,16 @@ public class SistemaDeVotacion {
 				mesa = new MesaGeneral(presidente, numeroMesa);
 				break;
 		}
+
+		// Asigna el turno al presidente
+		votante.asignarTurno(
+			new Tupla<Integer,Integer>(
+				mesa.getNumero(), mesa.getFranjasHorarias()[0]
+			)
+		);
+		mesa.registrarVotante();
 		
 		mesas.add(mesa);
-		
 		return numeroMesa;
 	}
 
@@ -192,13 +199,9 @@ public class SistemaDeVotacion {
 		Mesa mesa = null;
 		int horarioDisponible = 0;
 		
-		System.out.println("OBTENER TURNO");
-		
 		while(itMesa.hasNext() && horarioDisponible == 0) {
 			
 			mesa = itMesa.next();
-			System.out.println(mesa);
-			System.out.println(mesa.obtenerHorarioDisponible());
 			
 			if(mesa.aceptaVotante(votante))
 				horarioDisponible = mesa.obtenerHorarioDisponible();
@@ -211,10 +214,24 @@ public class SistemaDeVotacion {
 		return turno;
 	}
 
-	public int asignarTurno() 
+	public int asignarTurno() throws Exception 
 	{
-		//Retorna la cantidad de turnos asignados.
-		return 1;
+	
+		int cantidadTurnosAsignados = 0;
+		
+		for(Votante votante : votantes) {
+			
+			if( (!votante.tieneTurnoAsignado())
+				&& (asignarTurno(votante.getDni()) != null)) {
+				
+				cantidadTurnosAsignados++;
+			}
+			
+			System.out.println(cantidadTurnosAsignados++);
+			
+		}
+		
+		return cantidadTurnosAsignados;
 	}
 	
 	public boolean votar(int dni) 

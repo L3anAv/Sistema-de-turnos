@@ -21,13 +21,13 @@ public class SistemaDeVotacionTest {
 		public int agregarMesa(String tipoMesa, int dni);
 		
 		
+		public Tupla<Integer, Integer> asignarTurno(int dni);
 		
 		
 		PENDIENTES:
 		
 		
 		
-		public Tupla<Integer, Integer> asignarTurno(int dni);
 
 		public int asignarTurno();
 		
@@ -50,21 +50,6 @@ public class SistemaDeVotacionTest {
 	SistemaDeVotacion sisv;
 	int dni = 30123456;
 	boolean hasError = false;
-	
-	
-	@Test 
-	public void someTest() {
-		
-		System.out.println(9 % 10);
-		System.out.println(10 % 10);
-		System.out.println(11 % 10);
-		
-		System.out.println(9 / 10);
-		System.out.println(10 / 10);
-		System.out.println(11 / 10);
-		
-	}
-	
 	
 	@Test
 	public void inicializaConNombre() {
@@ -103,8 +88,6 @@ public class SistemaDeVotacionTest {
 	}
 	
 	// Registrar Votatante. ToDo: test excepcion edad < 16
-	
-	
 	
 	@Test
 	public void registraUnVotante() throws Exception {
@@ -198,8 +181,6 @@ public class SistemaDeVotacionTest {
 
 		Tupla<Integer, Integer> turno = null;
 		
-		System.out.println(sisv.getMesas());
-		
 		try {
 
 			turno = sisv.asignarTurno(dni);
@@ -223,9 +204,6 @@ public class SistemaDeVotacionTest {
 	
 	
 	
-	
-	
-	
 	/* Asigna turnos automáticamente a los votantes sin turno.
 	* El sistema busca si hay alguna mesa y franja horaria factible en la que haya disponibilidad.
 	* Devuelve la cantidad de turnos que pudo asignar.
@@ -233,10 +211,57 @@ public class SistemaDeVotacionTest {
 	
 	// public int asignarTurno();
 	
-	
-	
-	
-	
+	@Test
+	public void hayVotantesSinTurno_MesasDisponibles_devuelveCantidadDeTurnosAsignados() throws Exception {
 
+		sisv = new SistemaDeVotacion("Sistema Test");
+
+		// SetUp Mesas y Presidentes
+		sisv.registrarVotante(dni, "Pres1", 40, false, true);
+		sisv.registrarVotante(++dni, "Pres2", 70, true, true);
+		sisv.registrarVotante(++dni, "Pres3", 40, true, false);
+		sisv.agregarMesa("Enf_Preex", dni);
+		sisv.agregarMesa("Mayor65", --dni);
+		sisv.agregarMesa("General", --dni);
+
+		
+		// 2 van a recibir turno por dni
+		sisv.registrarVotante((dni += 100), "Votante con Enf_Preex1", 40, true, false);
+		sisv.registrarVotante(++dni, "Votante con Enf_Preex2", 40, true, false);
+		
+		// 2 con enf
+		sisv.registrarVotante((dni += 100), "Votante con Enf_Preex3", 40, true, false);
+		sisv.registrarVotante(++dni, "Votante con Enf_Preex4", 40, true, false);
+		
+		//un mayor y un general
+		sisv.registrarVotante(++dni, "Un Votante Mayor", 70, false, false);
+		sisv.registrarVotante(++dni, "Votante General", 40, false, false);
+		
+		// Estos no deben ser asignados ya que no hay mesa
+		sisv.registrarVotante(++dni, "Trabajadores", 40, true, true);
+		sisv.registrarVotante(++dni, "Trabajadores", 40, false, true);
+		
+		// En total se esperan 4 asignaciones
+		
+		
+		int turnosAsignados = 0;
+		try {
+			turnosAsignados = sisv.asignarTurno();
+		}
+		
+		catch (Exception e) {
+
+			System.out.println(e.getMessage());
+		
+		}
+				
+		
+		assertEquals("Debió asignar cuatro turnos", 4, turnosAsignados);
+	}
+	
+	
+	
+	
+	
 	
 }

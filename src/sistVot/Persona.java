@@ -4,7 +4,6 @@ public abstract class Persona extends Object {
 	
 	private int dni;
 	private String nombre;
-	private Tupla<Integer, Integer> turnoAsignado;
 	private boolean esPresidente;
 	private boolean asistioAVotar;
 	
@@ -20,9 +19,7 @@ public abstract class Persona extends Object {
 // Metodos de la clase 
 	
 	
-	public boolean tieneTurnoAsignado( ) {
-		return turnoAsignado != null;
-	}
+	
 	
 	
 	
@@ -67,19 +64,14 @@ public abstract class Persona extends Object {
 		this.asistioAVotar = asistioAVotar;
 	}
 	
-	public void asignarTurno(Tupla<Integer, Integer> nuevoTurno) {
-		turnoAsignado = nuevoTurno;
-	}
+	
 	
 	public boolean getEsPresidente() 
 {
 		return esPresidente;
 }
 
-	public Tupla<Integer, Integer> getTurnoAsignado() 
-{
-		return turnoAsignado;
-}
+	
 
 	public String getNombre() 
 {

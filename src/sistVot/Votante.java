@@ -5,6 +5,8 @@ public class Votante extends Persona{
 	private int edad;
 	private boolean tieneEnfermedad;
 	private boolean esTrabajador;
+	private Tupla<Integer, Integer> turnoAsignado;
+
 	// private boolean esPresidente = false;
 	
 // Constructor  ---------------------------------		
@@ -28,6 +30,7 @@ public class Votante extends Persona{
 		toString += " | TIENE ENFERMEDAD: " + tieneEnfermedad;
 		toString += " | ES TRABAJADOR: " + esTrabajador;
 		toString += " | ES MAYOR: " + esMayor();
+		toString += " | TIENE TURNO ASIGNADO: " + tieneTurnoAsignado();
 		
 		return toString;
 	}
@@ -71,6 +74,11 @@ public class Votante extends Persona{
 	}
 	*/
 
+	public Tupla<Integer, Integer> getTurnoAsignado() 
+	{
+		return turnoAsignado;
+	}
+	
 	public int getEdad() {
 		return edad;
 	}
@@ -85,6 +93,14 @@ public class Votante extends Persona{
 
 	public boolean esMayor() {
 		return edad >= 65;
+	}
+	
+	public void asignarTurno(Tupla<Integer, Integer> nuevoTurno) {
+		turnoAsignado = nuevoTurno;
+	}
+	
+	public boolean tieneTurnoAsignado() {
+		return turnoAsignado != null;
 	}
 
 	/*

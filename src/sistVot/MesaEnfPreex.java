@@ -17,7 +17,6 @@ public class MesaEnfPreex extends Mesa {
 	@Override
 	public boolean aceptaVotante(Votante votante) {
 
-		System.out.println(votante.toString());
 		return (
 			!votante.esTrabajador()
 			&& votante.tieneEnfermedad() 
