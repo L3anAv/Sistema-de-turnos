@@ -2,8 +2,6 @@ package sistVot;
 
 public class Presidente extends Persona {
 	
-	private Turno turnoAsignado;
-
 // Constructor  ---------------------------------
 	
 	public Presidente(int dni, String nombre) 
@@ -11,6 +9,16 @@ public class Presidente extends Persona {
 		super(dni, nombre);
 }
 	
+//--- Metodos (Sobre-escritura)
 	
-	
+	@Override
+	public String toString() {
+		StringBuilder nombrePresidente = new StringBuilder();
+		
+		nombrePresidente.append(getNombre());
+		
+		return nombrePresidente.toString();
+	}
+
+
 }

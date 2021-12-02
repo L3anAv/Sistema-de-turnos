@@ -1,67 +1,142 @@
 package sistVot;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 public abstract class Mesa {
 	
 	protected int numero;
 	private Presidente presidente;
 	private int[] franjasHorarias;
 	private int maximoVotantesPorFranjaHoraria;
-	private int votantesRegistrados;
 	private String tipoDeMesa;
+	private Map<Integer, List<Integer>> DNIsAsignadosPorFranjaHoraria;
+	private int cantidadVotantesAsignados;
 
-	// Constructor  ----------------------------
+// Constructor  ----------------------------
 		
 	public Mesa(Presidente presidente, int numero, String tipoDeMesa, int maximoVotantesPorFranjaHoraria) {
-		// TODO Auto-generated constructor stub
+		
 		this.presidente = presidente;
 		this.numero = numero;
 		this.franjasHorarias = new int[]{8, 9, 10, 11, 12, 13, 14, 15, 16, 17};
-		this.votantesRegistrados = 0;
 		this.maximoVotantesPorFranjaHoraria = maximoVotantesPorFranjaHoraria;
 		this.tipoDeMesa = tipoDeMesa;
-	}
+		
+		DNIsAsignadosPorFranjaHoraria = new HashMap<Integer, List<Integer>>();
+		for(Integer i : getFranjasHorarias()) {
+			DNIsAsignadosPorFranjaHoraria.put(i, new ArrayList<Integer>());
+		}
+		
+}
 
-	@Override
-	public String toString() {
-		return "Mesa para " + tipoDeMesa + " n° " + getNumero();
-	}
+// --- Metodos abstract
 	
-// Metodos Abstrac -----------
 	protected abstract boolean aceptaVotante(Votante votante);
+	protected abstract boolean esDeTipo(String tipoMesa);
 	
-// Metodos de Mesa  -----------
+//--- Metodos de Mesa.
+	
+	public void registrarVotante(int horario, int dni) {
+		// Se asume que los horarios son correctos y los dnis unicos
+		DNIsAsignadosPorFranjaHoraria.get(horario).add(dni);
+		cantidadVotantesAsignados++;
+}
+	
+	
+	public boolean tieneAsignados() {
+		// TODO Auto-generated method stub
+		boolean tieneAsignados = false;
+		for(List<Integer>dnisAsignados : DNIsAsignadosPorFranjaHoraria.values())
+			tieneAsignados = tieneAsignados || (!dnisAsignados.isEmpty());
+			
+		return tieneAsignados;
+}
+	
+	
 	public int obtenerHorarioDisponible() {
 
-		// Como la division de enteros trunca el resultado, sirve para obtener la posicion 
-		// de franjas horarias libre.
-		int arrayPosition = votantesRegistrados / maximoVotantesPorFranjaHoraria;
-		if(franjasHorarias.length == arrayPosition) {
-			return -1;
-		} else 
-			return (
-				franjasHorarias[
-	                votantesRegistrados / maximoVotantesPorFranjaHoraria
-	            ]
-			);
-}
-
-	public void registrarVotante() {
-		votantesRegistrados++;
+		boolean horarioDisponible = false;
+		int horario = 0;
+		
+		Iterator<Integer> itHorarios= DNIsAsignadosPorFranjaHoraria.keySet().iterator();
+		
+		while( itHorarios.hasNext() && !horarioDisponible ) {
+			
+			horario = itHorarios.next();
+			
+			horarioDisponible = 
+					DNIsAsignadosPorFranjaHoraria.get(horario).size() < maximoVotantesPorFranjaHoraria;
+		}
+		
+		if(!horarioDisponible)
+			horario = 0;
+		
+		return horario;
+		
 }
 	
-// Getters and Setters ---------------------
+//--- Metodo toString (Sobre-escritura) De Mesa (Falta equals).
 	
-	public Presidente getPresidente() {
-			return presidente;
+	@Override
+	public String toString() {
+		StringBuilder toStringMesa = new StringBuilder();
+		
+		toStringMesa.append("Soy una mesa para: ")
+		.append(tipoDeMesa).
+		append(" | ").
+		append("Mi presidente es: ")
+		.append(presidente.toString());
+		
+		return toStringMesa.toString();
+}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (this == obj)
+			return true;
+		
+		if (obj == null)
+			return false;
+		
+		if (getClass() != obj.getClass())
+			return false;
+		
+		Mesa other = (Mesa) obj;
+		if (numero == other.numero)
+			return true;
+		return false;
+	}
+	
+// ------- Getters and Setters
+	
+
+
+	public Presidente getPresidente(){
+		return presidente;
 }
 
-	public int[] getFranjasHorarias() {
-			return franjasHorarias;
+	public int[] getFranjasHorarias(){
+		return franjasHorarias;
 }
-
 
 	public int getNumero(){
-			return numero;
+		return numero;
 }
+
+	public Map<Integer, List<Integer>> getDNIsAsignadosPorFranjaHoraria(){
+		return DNIsAsignadosPorFranjaHoraria;
+}
+
+	public int cantidadVotantesAsignados() {
+		return cantidadVotantesAsignados;
+}
+	
+	
+	
 	
 }

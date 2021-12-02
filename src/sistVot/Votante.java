@@ -6,10 +6,8 @@ public class Votante extends Persona{
 	private boolean tieneEnfermedad;
 	private boolean esTrabajador;
 	private Tupla<Integer, Integer> turnoAsignado;
-
-	// private boolean esPresidente = false;
 	
-// Constructor  ---------------------------------		
+//--- Constructor.	
 	
 	public Votante(int dni, String nombre, int edad, boolean tieneEnfermedad, boolean esTrabajador)
 {
@@ -20,6 +18,8 @@ public class Votante extends Persona{
 		this.esTrabajador = esTrabajador;
 		
 }
+
+//--- Metodos (Sobre-escritura)
 	
 	@Override
 	public String toString() {
@@ -35,12 +35,12 @@ public class Votante extends Persona{
 		return toString;
 	}
 	
+// Getters  ---------------------------
 
 	public Tupla<Integer, Integer> getTurnoAsignado() 
 	{
 		return turnoAsignado;
 	}
-
 	
 	public int getEdad() {
 		return edad;

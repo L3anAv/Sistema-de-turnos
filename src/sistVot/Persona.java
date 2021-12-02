@@ -15,8 +15,9 @@ public abstract class Persona extends Object {
 		this.nombre = nombre;
 		
 }
+
+//--- Metodos (Sobre-escritura)	
 	
-// Metodos Equals	
 	@Override
 	public boolean equals(Object obj) {
 		
@@ -37,25 +38,23 @@ public abstract class Persona extends Object {
 
 // Getters and Setters --------------------------
 
-	public boolean getAsistioAVotar(){
+	public boolean asistioAVotar(){
 		return asistioAVotar;
 }
 	
-	public void SetAsistioAVotar(boolean asistioAVotar){
+	public void asistioAVotar(boolean asistioAVotar){
 		this.asistioAVotar = asistioAVotar;
-
 }
-
+	
 	public boolean getEsPresidente(){
 		return esPresidente;
 }
-
 
 	public String getNombre(){
 		return nombre;
 }
 	
-	public int getDni(){
+	public int getDni() {
 		return dni;
 }
 
